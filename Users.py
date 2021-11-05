@@ -88,26 +88,19 @@ class User(Authentication,Market):
         return res
 
 
-    def getTradeHistory(self,limit=500,trade_id=0,timestamp=0):
+    def getTradeHistory(self,limit=500,trade_id=0):
         body={'limit':limit}
         if not trade_id==0:
             body['trade_id']=trade_id
-
-        if not timestamp == 0:
-            body['timestamp']=timestamp;
-            time_flag=False
-        else:
-            time_flag=True
 
         json_body,headers=Authentication.authenticate(self,body,time_flag)
         res=requests.post(self.base_url+self.order_url+self.trade_hist_url,data=json_body,headers=headers)
         #print(body)
         return res
 
-    def cancelOrder(self,order_id,timeStamp):
+    def cancelOrder(self,order_id):
         body={
                 'order_id':order_id,
-                'timestamp':timeStamp
                 }
 
         json_body,headers=Authentication.authenticate(self,body)
